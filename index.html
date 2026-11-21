@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presentación Docente · Juan Carlos Arcila Herrera | UCN</title>
+  <style>
+    :root {
+      --ucn-blue: #68B5E3;
+      --ucn-blue-dark: #2e8bc0;
+      --ucn-purple: #3C335D;
+      --text-light: #f5f7fb;
+      --text-muted: #d8deec;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-light);
+      background: linear-gradient(135deg, #1b1836 0%, #0e1a33 100%);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    /* ---------- Background video ---------- */
+    .bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      background: #0e1a33;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(28, 23, 54, 0.74) 0%, rgba(14, 22, 46, 0.84) 55%, rgba(14, 22, 46, 0.92) 100%);
+    }
+
+    /* ---------- Layout ---------- */
+    .wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(16px, 3.5vw, 36px);
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .logo-panel {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 14px;
+      padding: 10px 18px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+      max-width: 260px;
+    }
+    .logo-panel img { display: block; width: 100%; height: auto; }
+
+    /* ---------- Language toggle ---------- */
+    .lang-toggle {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
+      padding: 4px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    .lang-toggle button {
+      border: none;
+      background: transparent;
+      color: #eef2fb;
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+      padding: 8px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .lang-toggle button.active { background: var(--ucn-blue); color: #10203a; }
+    .lang-toggle button:not(.active):hover { background: rgba(255, 255, 255, 0.18); }
+    .lang-toggle button:focus-visible { outline: 2px solid var(--ucn-blue); outline-offset: 2px; }
+
+    /* ---------- Main Presentation Grid ---------- */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+      padding: 8px 0 28px;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      padding: clamp(22px, 3.5vw, 38px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.38);
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      gap: clamp(22px, 3vw, 40px);
+      align-items: center;
+    }
+
+    .photo-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(104, 181, 227, 0.45);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      aspect-ratio: 4 / 5;
+      background: rgba(16, 32, 58, 0.6);
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #10203a;
+      background: var(--ucn-blue);
+      border-radius: 999px;
+      padding: 6px 14px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.15;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      margin-bottom: 16px;
+    }
+
+    .bio-text {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .bio-text p.closing {
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    /* ---------- Lower CV Grid ---------- */
+    .cv-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 18px;
+      padding: 24px 26px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32);
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--ucn-blue);
+    }
+
+    .edu-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 22px;
+    }
+    .edu-list li {
+      padding-left: 12px;
+      border-left: 2px solid var(--ucn-blue);
+    }
+    .edu-list strong {
+      display: block;
+      font-size: 0.94rem;
+      color: var(--text-light);
+      line-height: 1.35;
+    }
+    .edu-list span {
+      display: block;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .lang-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .lang-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 0.94rem;
+    }
+    .lang-level {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ucn-blue);
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding-top: 8px;
+    }
+    footer .sep { opacity: 0.6; }
+
+    @media (max-width: 880px) {
+      .hero-card { grid-template-columns: 1fr; }
+      .photo-frame { max-width: 240px; margin: 0 auto; }
+      .cv-grid { grid-template-columns: 1fr; }
+      .edu-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <video class="bg-video" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1">
+    <source src="assets/background.mp4" type="video/mp4" />
+  </video>
+  <div class="overlay" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="logo-panel">
+        <img src="assets/logo.svg" alt="Fundación Universitaria Católica del Norte — UCN" />
+      </div>
+
+      <div class="lang-toggle" role="group" data-i18n-aria="lang.label">
+        <button id="lang-es" type="button" class="active" aria-pressed="true" data-i18n-aria="lang.es">ES</button>
+        <button id="lang-en" type="button" aria-pressed="false" data-i18n-aria="lang.en">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-card" aria-labelledby="profile-name">
+        <div class="photo-frame">
+          <img src="assets/foto_JCAH.jpg" width="270" height="338" alt="Juan Carlos Arcila Herrera" />
+        </div>
+
+        <div>
+          <span class="badge" data-i18n="welcome">¡Bienvenidos al curso vacacional 2026-4 de la UCN!</span>
+          <h1 id="profile-name" data-i18n="name">Soy Juan Carlos Arcila Herrera</h1>
+          <div class="bio-text">
+            <p data-i18n="bio1">Soy docente de inglés de la Fundación Universitaria Católica del Norte (UCN), con cerca de 20 años de experiencia en la enseñanza de idiomas y la formación bilingüe. Mi propósito es acompañarlos en el desarrollo de sus competencias comunicativas en inglés, brindándoles herramientas que puedan aplicar en sus contextos académicos, personales y profesionales.</p>
+            <p data-i18n="bio2">A lo largo de mi trayectoria he trabajado en educación superior y formación especializada. He sido consultor senior del British Council y he colaborado con instituciones como CEIPA. Actualmente, también me desempeño como Asesor Académico de la División de Bilingüismo de la Escuela de Formación de Infantería de Marina (ESFIM) de la Armada Nacional de Colombia.</p>
+            <p data-i18n="bio3">Mi experiencia combina la enseñanza del inglés con la innovación pedagógica y la tecnología educativa, buscando siempre que el aprendizaje sea práctico, dinámico y significativo.</p>
+            <p class="closing" data-i18n="bio4">¡Espero que disfrutemos juntos esta experiencia y que sea una oportunidad para aprender y avanzar en el dominio del inglés!</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cv-grid" aria-label="Resumen de hoja de vida">
+        <article class="card">
+          <h2 data-i18n="edu.title">Formación y Certificaciones</h2>
+          <ul class="edu-list">
+            <li>
+              <strong data-i18n="edu1">Doctor Honoris Causa en Bilingüismo Inteligente</strong>
+              <span>Centro de Estudios de Veracruz — México</span>
+            </li>
+            <li>
+              <strong data-i18n="edu2">Magistrante en Competencias Educativas</strong>
+              <span>Centro de Estudios de Veracruz — México</span>
+            </li>
+            <li>
+              <strong data-i18n="edu3">Magistrante en Dirección Estratégica de las TIC</strong>
+              <span>Universidad Europea del Atlántico (UNEATLANTICO)</span>
+            </li>
+            <li>
+              <strong data-i18n="edu4">Licenciado en Lengua Inglesa (2012–2015)</strong>
+              <span>Universidad de San Buenaventura</span>
+            </li>
+            <li>
+              <strong data-i18n="edu5">Tutoría Virtual (420 horas, 2009)</strong>
+              <span>OEA / Universidad del Rosario</span>
+            </li>
+            <li>
+              <strong data-i18n="edu6">Administración de Recursos Humanos (2008)</strong>
+              <span>SENA</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2 data-i18n="langs.title">Idiomas</h2>
+          <ul class="lang-list">
+            <li><span data-i18n="l.es">Español</span><span class="lang-level" data-i18n="lvl.adv">Avanzado / Nativo</span></li>
+            <li><span data-i18n="l.en">Inglés</span><span class="lang-level" data-i18n="lvl.en">Avanzado</span></li>
+            <li><span data-i18n="l.pl">Polaco</span><span class="lang-level" data-i18n="lvl.int">Intermedio</span></li>
+            <li><span data-i18n="l.ru">Ruso</span><span class="lang-level" data-i18n="lvl.bas">Básico</span></li>
+          </ul>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <span data-i18n="footer">Fundación Universitaria Católica del Norte</span>
+      <span class="sep"> · </span>
+      <span data-i18n="footer.rights">Todos los derechos reservados</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var translations = {
+        es: {
+          "welcome": "¡Bienvenidos al curso vacacional 2026-4 de la UCN!",
+          "name": "Soy Juan Carlos Arcila Herrera",
+          "bio1": "Soy docente de inglés de la Fundación Universitaria Católica del Norte (UCN), con cerca de 20 años de experiencia en la enseñanza de idiomas y la formación bilingüe. Mi propósito es acompañarlos en el desarrollo de sus competencias comunicativas en inglés, brindándoles herramientas que puedan aplicar en sus contextos académicos, personales y profesionales.",
+          "bio2": "A lo largo de mi trayectoria he trabajado en educación superior y formación especializada. He sido consultor senior del British Council y he colaborado con instituciones como CEIPA. Actualmente, también me desempeño como Asesor Académico de la División de Bilingüismo de la Escuela de Formación de Infantería de Marina (ESFIM) de la Armada Nacional de Colombia.",
+          "bio3": "Mi experiencia combina la enseñanza del inglés con la innovación pedagógica y la tecnología educativa, buscando siempre que el aprendizaje sea práctico, dinámico y significativo.",
+          "bio4": "¡Espero que disfrutemos juntos esta experiencia y que sea una oportunidad para aprender y avanzar en el dominio del inglés!",
+          "edu.title": "Formación y Certificaciones",
+          "edu1": "Doctor Honoris Causa en Bilingüismo Inteligente",
+          "edu2": "Magistrante en Competencias Educativas",
+          "edu3": "Magistrante en Dirección Estratégica de las TIC",
+          "edu4": "Licenciado en Lengua Inglesa (2012–2015)",
+          "edu5": "Tutoría Virtual (420 horas, 2009)",
+          "edu6": "Administración de Recursos Humanos (2008)",
+          "langs.title": "Idiomas",
+          "l.es": "Español",
+          "l.en": "Inglés",
+          "l.pl": "Polaco",
+          "l.ru": "Ruso",
+          "lvl.adv": "Avanzado / Nativo",
+          "lvl.en": "Avanzado",
+          "lvl.int": "Intermedio",
+          "lvl.bas": "Básico",
+          "footer": "Fundación Universitaria Católica del Norte",
+          "footer.rights": "Todos los derechos reservados",
+          "lang.label": "Cambiar idioma",
+          "lang.es": "Español",
+          "lang.en": "English"
+        },
+        en: {
+          "welcome": "Welcome to UCN's 2026-4 Vacation Course!",
+          "name": "I am Juan Carlos Arcila Herrera",
+          "bio1": "I am an English lecturer at Fundación Universitaria Católica del Norte (UCN), with nearly 20 years of experience in language teaching and bilingual education. My purpose is to guide you in developing your communicative competence in English, giving you practical tools for your academic, personal and professional contexts.",
+          "bio2": "Throughout my career I have worked in higher education and specialised training. I have served as a Senior Consultant for the British Council and collaborated with institutions such as CEIPA. Currently, I also serve as Academic Advisor for the Bilingualism Division at the Marine Infantry Training School (ESFIM) of the Colombian National Navy.",
+          "bio3": "My experience combines English teaching with pedagogical innovation and educational technology, always aiming for practical, dynamic and meaningful learning.",
+          "bio4": "I hope we enjoy this experience together and that it becomes a great opportunity to learn and advance in your command of English!",
+          "edu.title": "Education & Certifications",
+          "edu1": "Doctor Honoris Causa in Intelligent Bilingualism",
+          "edu2": "Master's Candidate in Educational Competencies",
+          "edu3": "Master's Candidate in Strategic ICT Management",
+          "edu4": "B.A. in English Language Teaching (2012–2015)",
+          "edu5": "Virtual Tutoring (420 hours, 2009)",
+          "edu6": "Human Resources Management (2008)",
+          "langs.title": "Languages",
+          "l.es": "Spanish",
+          "l.en": "English",
+          "l.pl": "Polish",
+          "l.ru": "Russian",
+          "lvl.adv": "Advanced / Native",
+          "lvl.en": "Advanced",
+          "lvl.int": "Intermediate",
+          "lvl.bas": "Basic",
+          "footer": "Fundación Universitaria Católica del Norte",
+          "footer.rights": "All rights reserved",
+          "lang.label": "Switch language",
+          "lang.es": "Español",
+          "lang.en": "English"
+        }
+      };
+
+      var currentLang = "es";
+      var btnEs = document.getElementById("lang-es");
+      var btnEn = document.getElementById("lang-en");
+
+      function applyLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          var k = el.getAttribute("data-i18n");
+          if (translations[lang][k]) el.textContent = translations[lang][k];
+        });
+        document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+          var k = el.getAttribute("data-i18n-aria");
+          if (translations[lang][k]) el.setAttribute("aria-label", translations[lang][k]);
+        });
+        btnEs.classList.toggle("active", lang === "es");
+        btnEn.classList.toggle("active", lang === "en");
+        btnEs.setAttribute("aria-pressed", String(lang === "es"));
+        btnEn.setAttribute("aria-pressed", String(lang === "en"));
+        document.title = (lang === "es")
+          ? "Presentación Docente · Juan Carlos Arcila Herrera | UCN"
+          : "Faculty Presentation · Juan Carlos Arcila Herrera | UCN";
+      }
+
+      btnEs.addEventListener("click", function () { applyLanguage("es"); });
+      btnEn.addEventListener("click", function () { applyLanguage("en"); });
+      applyLanguage("es");
+    })();
+  </script>
+</body>
+</html>
